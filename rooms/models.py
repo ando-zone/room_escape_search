@@ -10,10 +10,10 @@ class Room(models.Model):
     )
     description = models.TextField()
     location = models.CharField(max_length=140)
-    # brand = models.ForeignKey(
-    #     "brands.Brand",
-    #     on_delete=models.CASCADE,
-    # )
+    brand = models.ForeignKey(
+        "brands.Brand",
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return self.name

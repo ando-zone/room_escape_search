@@ -9,6 +9,7 @@ class RoomAdmin(admin.ModelAdmin):
         "name",
         "price",
         "location",
+        "brand",
     ]
     list_filter = [
         "name",
