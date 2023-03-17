@@ -10,11 +10,17 @@ class RoomAdmin(admin.ModelAdmin):
         "price",
         "location",
         "brand",
+        "genre",
+        "difficulty",
+        "duration_of_time",
     ]
     list_filter = [
         "name",
         "price",
-        "location"
+        "location",
+        "genre",
+        "difficulty",
+        "duration_of_time",
     ]
     search_fields = [
         "name__startswith",
