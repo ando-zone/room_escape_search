@@ -1,5 +1,6 @@
 from django.db import models
 from common.models import CommonModel
+# from reviews.models import Review
 
 # Create your models here.
 class Room(CommonModel):
@@ -30,6 +31,12 @@ class Room(CommonModel):
         on_delete=models.CASCADE,
     )
 
+    # 아래 메서드에서 self를 꼭 self라고 쓰지 않아도 됩니다. room으로 바꿔도 아무런 지장이 없어요.
     def __str__(self) -> str:
         return self.name
+
+    # TODO@Ando: total_reviews는 어떻게 보여줄 수 있을까? reverse accessors!
+    # TODO@Ando: total_reviews를 이용하여 list_filter를 하는 방법은 없을까?
+    def total_reviews(self) -> int:
+        return self.reviews.count()
 
