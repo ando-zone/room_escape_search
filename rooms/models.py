@@ -40,3 +40,13 @@ class Room(CommonModel):
     def total_reviews(self) -> int:
         return self.reviews.count()
 
+    def rating(room):
+        count = room.reviews.count()
+        if count == 0:
+            return 0
+        else:
+            total_rating = 0
+            # for review in room.reviews.all()로 적는 것보다 아래가 더 효율적임. (더 최적화 되어 있음.)
+            for review in room.reviews.all().values("rating"): # 반환값이 딕셔너리임.
+                total_rating += review["rating"]
+            return round(total_rating / count, 2)

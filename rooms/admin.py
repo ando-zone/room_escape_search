@@ -12,6 +12,7 @@ class RoomAdmin(admin.ModelAdmin):
         "brand",
         "genre",
         "total_reviews",
+        "rating",
         "difficulty",
         "duration_of_time",
     ]
