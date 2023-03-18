@@ -35,6 +35,7 @@ CUSTOM_APPS = [
     'users.apps.UsersConfig',
     'brands.apps.BrandsConfig',
     "common.apps.CommonConfig",
+    "reviews.apps.ReviewsConfig",
 ]
 
 SYSTEM_APPS = [

@@ -5,11 +5,11 @@ from common.models import CommonModel
 class Room(CommonModel):
     """Model Definition for Rooms"""
     class DifficultyChoices(models.IntegerChoices):
-        ONE = (1, "One") # (value, label) 괄호는 필수가 아님.
-        TWO = (2, "Two") # (value, label) 괄호는 필수가 아님.
-        THREE = (3, "Three") # (value, label) 괄호는 필수가 아님.
-        FOUR = (4, "Four") # (value, label) 괄호는 필수가 아님.
-        FIVE = (5, "Five") # (value, label) 괄호는 필수가 아님.
+        ONE = (1, "🔥") # (value, label) 괄호는 필수가 아님.
+        TWO = (2, "🔥🔥") # (value, label) 괄호는 필수가 아님.
+        THREE = (3, "🔥🔥🔥") # (value, label) 괄호는 필수가 아님.
+        FOUR = (4, "🔥🔥🔥🔥") # (value, label) 괄호는 필수가 아님.
+        FIVE = (5, "🔥🔥🔥🔥🔥") # (value, label) 괄호는 필수가 아님.
 
     name = models.CharField(max_length=140)
     price = models.PositiveIntegerField(
