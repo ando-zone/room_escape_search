@@ -1,11 +1,16 @@
 from rest_framework import serializers
 from .models import Room
 from brands.serializers import BrandSerializer
+from reviews.serializers import ReviewSerializer
 
 
 class RoomDetailSerializer(serializers.ModelSerializer):
     brand = BrandSerializer(read_only=True)
     rating = serializers.SerializerMethodField()
+    reviews = ReviewSerializer(
+        many=True,
+        read_only=True,
+    )
 
     class Meta:
         model = Room
