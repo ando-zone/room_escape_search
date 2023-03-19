@@ -13,7 +13,13 @@ class Migration(migrations.Migration):
             model_name="room",
             name="difficulty",
             field=models.PositiveIntegerField(
-                choices=[(1, "🔥"), (2, "🔥🔥"), (3, "🔥🔥🔥"), (4, "🔥🔥🔥🔥"), (5, "🔥🔥🔥🔥🔥")]
+                choices=[
+                    (1, "🔥"),
+                    (2, "🔥🔥"),
+                    (3, "🔥🔥🔥"),
+                    (4, "🔥🔥🔥🔥"),
+                    (5, "🔥🔥🔥🔥🔥"),
+                ]
             ),
         ),
     ]

@@ -5,17 +5,20 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('brands', '0001_initial'),
-        ('rooms', '0002_alter_room_price'),
+        ("brands", "0001_initial"),
+        ("rooms", "0002_alter_room_price"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='room',
-            name='brand',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='brands.brand'),
+            model_name="room",
+            name="brand",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="brands.brand",
+            ),
             preserve_default=False,
         ),
     ]

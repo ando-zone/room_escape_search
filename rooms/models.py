@@ -1,21 +1,22 @@
 from django.db import models
 from common.models import CommonModel
+
 # from reviews.models import Review
+
 
 # Create your models here.
 class Room(CommonModel):
     """Model Definition for Rooms"""
+
     class DifficultyChoices(models.IntegerChoices):
-        ONE = (1, "🔥") # (value, label) 괄호는 필수가 아님.
-        TWO = (2, "🔥🔥") # (value, label) 괄호는 필수가 아님.
-        THREE = (3, "🔥🔥🔥") # (value, label) 괄호는 필수가 아님.
-        FOUR = (4, "🔥🔥🔥🔥") # (value, label) 괄호는 필수가 아님.
-        FIVE = (5, "🔥🔥🔥🔥🔥") # (value, label) 괄호는 필수가 아님.
+        ONE = (1, "🔥")  # (value, label) 괄호는 필수가 아님.
+        TWO = (2, "🔥🔥")  # (value, label) 괄호는 필수가 아님.
+        THREE = (3, "🔥🔥🔥")  # (value, label) 괄호는 필수가 아님.
+        FOUR = (4, "🔥🔥🔥🔥")  # (value, label) 괄호는 필수가 아님.
+        FIVE = (5, "🔥🔥🔥🔥🔥")  # (value, label) 괄호는 필수가 아님.
 
     name = models.CharField(max_length=140)
-    price = models.PositiveIntegerField(
-        help_text="Positive Numbers Only"
-    )
+    price = models.PositiveIntegerField(help_text="Positive Numbers Only")
     # TODO@Ando: 이미지는 우선 room 한정해서 하나만 필요할 것 같아 일단은 photos app은 만들지 않기로 함.
     image = models.ImageField(null=True, blank=True)
     # TODO@Ando: airbnb에서는 category를 따로 하나의 앱으로 분류했음. 여기서는 필요하지 않을 것 같음.
@@ -47,6 +48,6 @@ class Room(CommonModel):
         else:
             total_rating = 0
             # for review in room.reviews.all()로 적는 것보다 아래가 더 효율적임. (더 최적화 되어 있음.)
-            for review in room.reviews.all().values("rating"): # 반환값이 딕셔너리임.
+            for review in room.reviews.all().values("rating"):  # 반환값이 딕셔너리임.
                 total_rating += review["rating"]
             return round(total_rating / count, 2)

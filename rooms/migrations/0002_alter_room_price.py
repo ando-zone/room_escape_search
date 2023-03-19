@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('rooms', '0001_initial'),
+        ("rooms", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='room',
-            name='price',
-            field=models.PositiveIntegerField(help_text='Positive Numbers Only'),
+            model_name="room",
+            name="price",
+            field=models.PositiveIntegerField(
+                help_text="Positive Numbers Only"
+            ),
         ),
     ]

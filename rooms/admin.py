@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import Room
+
 # Register your models here.
+
 
 # TODO@Ando: action만 따로 모아서 다른 모듈로 분리할 수 있음. 사용할 때는 이 곳에 import해야 함
 @admin.action(description="Set all prices to zero")
@@ -36,7 +38,4 @@ class RoomAdmin(admin.ModelAdmin):
         "difficulty",
         "duration_of_time",
     ]
-    search_fields = [
-        "name__startswith",
-        "location"
-    ]
+    search_fields = ["name__startswith", "location"]
