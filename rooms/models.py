@@ -15,6 +15,8 @@ class Room(CommonModel):
         FOUR = (4, "🔥🔥🔥🔥")  # (value, label) 괄호는 필수가 아님.
         FIVE = (5, "🔥🔥🔥🔥🔥")  # (value, label) 괄호는 필수가 아님.
 
+    # TODO@Ando: Description 추가해야 함.
+
     name = models.CharField(max_length=140)
     price = models.PositiveIntegerField(help_text="Positive Numbers Only")
     # TODO@Ando: 이미지는 우선 room 한정해서 하나만 필요할 것 같아 일단은 photos app은 만들지 않기로 함.
