@@ -5,7 +5,7 @@ Find Your Type of Room Escape
 
 GET[X] POST[X] /rooms
 GET[X] PUT[x] DELETE[x] /rooms/1
-GET[] POST[] /rooms/1/reviews
+GET[x] POST[x] PUT[] DELETE[] /rooms/1/reviews
 
 ## Wishlists
 

@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound, ParseError
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Room
 from brands.models import Brand
 from .serializers import RoomListSerializer, RoomDetailSerializer
@@ -72,6 +73,8 @@ class RoomDetail(APIView):
 
 
 class RoomReviews(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get_object(self, pk):
         try:
             return Room.objects.get(pk=pk)
@@ -93,3 +96,15 @@ class RoomReviews(APIView):
             many=True,
         )
         return Response(serializer.data)
+
+    def post(self, request, pk):
+        serializer = ReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            review = serializer.save(
+                user=request.user,
+                room=self.get_object(pk),
+            )
+            serializer = ReviewSerializer(review)
+            return Response(serializer.data)
+
+    # TODO@Ando: put과 delete는 여기가 아니라 reviews에서 구현해야 할 것 같다.
