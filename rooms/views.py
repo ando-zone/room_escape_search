@@ -47,3 +47,24 @@ class RoomDetail(APIView):
         room = self.get_object(pk)
         serializer = RoomDetailSerializer(room)
         return Response(serializer.data)
+
+    def put(self, request, pk):
+        room = self.get_object(pk)
+        selializer = RoomDetailSerializer(
+            room,
+            data = request.data,
+            partial=True,
+        )
+        if selializer.is_valid():
+            updated_room = selializer.save()
+            return Response(
+                RoomDetailSerializer(updated_room).data
+            )
+        else:
+            return Response(selializer.errors)
+
+    def delete(self, request, pk):
+        room = self.get_object(pk)
+        room.delete()
+
+        return Response(status=HTTP_204_NO_CONTENT)
