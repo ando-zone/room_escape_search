@@ -9,9 +9,9 @@ GET[x] POST[x] PUT[] DELETE[] /rooms/1/reviews
 
 ## Wishlists
 
-GET[] POST[] /wishlists
-GET[] PUT[] DELETE[] /wishlists/1
-<!-- PUT[] /wishlists/1/rooms/2 -->
+GET[x] POST[x] /wishlists
+GET[x] PUT[x] DELETE[x] /wishlists/1
+PUT[x] /wishlists/1/rooms/2 (Toggle 기능)
 <!-- is_liked[] -->
 
 ## Reviews
