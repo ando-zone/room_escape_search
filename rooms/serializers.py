@@ -7,10 +7,11 @@ from reviews.serializers import ReviewSerializer
 class RoomDetailSerializer(serializers.ModelSerializer):
     brand = BrandSerializer(read_only=True)
     rating = serializers.SerializerMethodField()
-    reviews = ReviewSerializer(
-        many=True,
-        read_only=True,
-    )
+    # TODO@Ando: api/v1/rooms/1/reviews로 대체합니다.
+    # reviews = ReviewSerializer(
+    #     many=True,
+    #     read_only=True,
+    # )
 
     class Meta:
         model = Room
