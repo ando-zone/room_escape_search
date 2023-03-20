@@ -2,11 +2,13 @@ from rest_framework import serializers
 from .models import Room
 from brands.serializers import BrandSerializer
 from reviews.serializers import ReviewSerializer
+from wishlists.models import Wishlist
 
 
 class RoomDetailSerializer(serializers.ModelSerializer):
     brand = BrandSerializer(read_only=True)
     rating = serializers.SerializerMethodField()
+    is_liked = serializers.SerializerMethodField()
     # TODO@Ando: api/v1/rooms/1/reviews로 대체합니다.
     # reviews = ReviewSerializer(
     #     many=True,
@@ -19,6 +21,13 @@ class RoomDetailSerializer(serializers.ModelSerializer):
 
     def get_rating(self, room):
         return room.rating()
+
+    def get_is_liked(self, room):
+        request = self.context["request"]
+        return Wishlist.objects.filter(
+            user=request.user,
+            rooms__pk=room.pk,
+        ).exists()
 
 
 class RoomListSerializer(serializers.ModelSerializer):
@@ -39,7 +48,7 @@ class RoomListSerializer(serializers.ModelSerializer):
             "duration_of_time",
             "location",
             "brand",
-            "rating"
+            "rating",
         )
         # depth = 1
 

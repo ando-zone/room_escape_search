@@ -29,10 +29,10 @@ class Rooms(APIView):
             except Brand.DoesNotExist:
                 raise ParseError("Brand not found.")
 
-            room = serializer.save(
-                brand = brand
+            room = serializer.save(brand=brand)
+            serializer = RoomDetailSerializer(
+                room, context={"request": request}
             )
-            serializer = RoomDetailSerializer(room)
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
@@ -47,20 +47,22 @@ class RoomDetail(APIView):
 
     def get(self, request, pk):
         room = self.get_object(pk)
-        serializer = RoomDetailSerializer(room)
+        serializer = RoomDetailSerializer(room, context={"request": request})
         return Response(serializer.data)
 
     def put(self, request, pk):
         room = self.get_object(pk)
         selializer = RoomDetailSerializer(
             room,
-            data = request.data,
+            data=request.data,
             partial=True,
         )
         if selializer.is_valid():
             updated_room = selializer.save()
             return Response(
-                RoomDetailSerializer(updated_room).data
+                RoomDetailSerializer(
+                    updated_room, context={"request": request}
+                ).data
             )
         else:
             return Response(selializer.errors)
@@ -92,7 +94,7 @@ class RoomReviews(APIView):
         end = start + page_size
         room = self.get_object(pk)
         serializer = ReviewSerializer(
-            room.reviews.all()[start:end], # 노션 노트 참조.
+            room.reviews.all()[start:end],  # 노션 노트 참조.
             many=True,
         )
         return Response(serializer.data)
