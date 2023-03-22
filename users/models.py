@@ -11,7 +11,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=150, editable=False)
     name = models.CharField(max_length=150, default="")
     is_admin = models.BooleanField(default=False) #non-nullable field (True of False)
-    avatar = models.ImageField()
+    avatar = models.URLField(blank=True)
     gender = models.CharField(
         max_length=10,
         choices=GenderChoices.choices,

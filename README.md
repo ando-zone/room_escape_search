@@ -21,6 +21,12 @@ PUT[x] /wishlists/1/rooms/2
 ## Brands
 
 ## Users
+GET[] PUT[] /me <!-- Private view -->
+POST[] /users
+GET[] /users/username <!-- Public view -->
+POST[] /users/log-in
+POST[] /users/change-password
+<!-- POST[] /users/github -->
 
 <!-- GET[] PUT[] /me
 POST[] /users
