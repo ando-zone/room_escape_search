@@ -16,10 +16,12 @@ class TinyUserSerializer(ModelSerializer):
             "username",
         )
 
+
 class PrivateUserSerializer(ModelSerializer):
     class Meta:
         model = User
         # fields = '__all__'
+        # TODO@Ando: 아래를 보시면 filter가 아니라 exclude 입니다!
         exclude = (
             "password",
             "is_superuser",
