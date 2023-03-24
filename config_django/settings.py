@@ -144,7 +144,8 @@ AUTH_USER_MODEL = "users.User"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
-        "config_django.authentications.TrustMeBroAuthentication",
+        "config_django.authentication.TrustMeBroAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        "config_django.authentication.JWTAuthentication",
     ]
 }
