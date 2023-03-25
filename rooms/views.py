@@ -11,6 +11,9 @@ from reviews.serializers import ReviewSerializer
 
 # Create your views here.
 class Rooms(APIView):
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         all_rooms = Room.objects.all()
         serializer = RoomListSerializer(all_rooms, many=True)
