@@ -42,7 +42,7 @@ class Users(APIView):
             raise ParseError
         serializer = serializers.PrivateUserSerializer(data=request.data)
         if serializer.is_valid():
-            #TODO@Ando: 패스워드 설정에서 실패해도 유저가 생성되는 문제가 발생함.(패스워드: 패스워드)
+            # TODO@Ando: 패스워드 설정에서 실패해도 유저가 생성되는 문제가 발생함.(패스워드: 패스워드)
             user = serializer.save()
             user.set_password(password)
             user.save()
@@ -64,7 +64,6 @@ class PublicUser(APIView):
 
 
 class ChangePassword(APIView):
-
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
@@ -96,11 +95,12 @@ class LogIn(APIView):
             login(request, user)
             return Response({"ok": "Welcome!"})
         else:
-            return Response({"error": "wrong password"})
+            return Response(
+                {"error": "wrong password"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class LogOut(APIView):
-
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -133,28 +133,26 @@ class JWTLogIn(APIView):
 class GithubLogIn(APIView):
     def post(self, request):
         try:
-            code = request.data.get('code')
+            code = request.data.get("code")
             access_token = requests.post(
                 f"https://github.com/login/oauth/access_token?code={code}&client_id=faa85bb702ec265f6120&client_secret={settings.GITHUB_SECRET}",
                 # json response를 받기 위해서 json response를 요청하는 과정
-                headers={
-                    "Accept": "application/json"
-                }
+                headers={"Accept": "application/json"},
             )
             access_token = access_token.json().get("access_token")
             user_data = requests.get(
-                "https://api.github.com/user", 
+                "https://api.github.com/user",
                 headers={
                     "Authorization": f"Bearer {access_token}",
-                    "Accept": "application/json"
+                    "Accept": "application/json",
                 },
             )
             user_data = user_data.json()
             user_emails = requests.get(
-                "https://api.github.com/user/emails", 
+                "https://api.github.com/user/emails",
                 headers={
                     "Authorization": f"Bearer {access_token}",
-                    "Accept": "application/json"
+                    "Accept": "application/json",
                 },
             )
             user_emails = user_emails.json()
@@ -168,7 +166,7 @@ class GithubLogIn(APIView):
                     username=user_data.get("login"),
                     email=user_emails[0]["email"],
                     name=user_data.get("name"),
-                    avatar=user_data.get("avatar_url")
+                    avatar=user_data.get("avatar_url"),
                 )
                 user.set_unusable_password()
                 user.save()
@@ -181,25 +179,23 @@ class GithubLogIn(APIView):
 class KakaoLogIn(APIView):
     def post(self, request):
         try:
-            code = request.data.get('code')
+            code = request.data.get("code")
             access_token = requests.post(
                 "https://kauth.kakao.com/oauth/token",
-                headers={
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
                 data={
                     "grant_type": "authorization_code",
                     "client_id": "0c99f06744ebc64b48e23cbabfd95aee",
                     "redirect_uri": "http://127.0.0.1:3000/social/kakao",
                     "code": code,
-                }
+                },
             )
             access_token = access_token.json().get("access_token")
             user_data = requests.get(
                 "https://kapi.kakao.com/v2/user/me",
                 headers={
                     "Authorization": f"Bearer {access_token}",
-                    "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
+                    "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                 },
             )
             user_data = user_data.json()
@@ -214,7 +210,7 @@ class KakaoLogIn(APIView):
                     username=profile.get("nickname"),
                     email=kakao_account.get("email"),
                     name=profile.get("nickname"),
-                    avatar=profile.get("profile_image_url")
+                    avatar=profile.get("profile_image_url"),
                 )
                 user.set_unusable_password()
                 user.save()
