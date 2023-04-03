@@ -47,6 +47,7 @@ CUSTOM_APPS = [
     'rooms.apps.RoomsConfig',
     'users.apps.UsersConfig',
     'brands.apps.BrandsConfig',
+    'branches.apps.BranchesConfig',
     "common.apps.CommonConfig",
     "reviews.apps.ReviewsConfig",
     "wishlists.apps.WishlistsConfig",
