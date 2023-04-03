@@ -29,5 +29,12 @@ class Review(CommonModel):
         choices=DifficultyChoices.choices,
     )
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "room"], name="my_unique_constraint"
+            )
+        ]
+
     def __str__(self) -> str:
         return f"{self.user} / {self.rating}⭐️"
