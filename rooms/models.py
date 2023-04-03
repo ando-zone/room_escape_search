@@ -9,11 +9,11 @@ class Room(CommonModel):
     """Model Definition for Rooms"""
 
     class DifficultyChoices(models.IntegerChoices):
-        ONE = (1, "🔥")  # (value, label) 괄호는 필수가 아님.
-        TWO = (2, "🔥🔥")  # (value, label) 괄호는 필수가 아님.
-        THREE = (3, "🔥🔥🔥")  # (value, label) 괄호는 필수가 아님.
-        FOUR = (4, "🔥🔥🔥🔥")  # (value, label) 괄호는 필수가 아님.
-        FIVE = (5, "🔥🔥🔥🔥🔥")  # (value, label) 괄호는 필수가 아님.
+        ONE = (1, "🔑")  # (value, label) 괄호는 필수가 아님.
+        TWO = (2, "🔑🔑")  # (value, label) 괄호는 필수가 아님.
+        THREE = (3, "🔑🔑🔑")  # (value, label) 괄호는 필수가 아님.
+        FOUR = (4, "🔑🔑🔑🔑")  # (value, label) 괄호는 필수가 아님.
+        FIVE = (5, "🔑🔑🔑🔑🔑")  # (value, label) 괄호는 필수가 아님.
 
     # TODO@Ando: Description 추가해야 함.
 
@@ -26,6 +26,12 @@ class Room(CommonModel):
     # 공식 난이도 (TODO@Ando: 체감 난이도는 유저가 직접 리뷰를 통해 달 수 있음)
     difficulty = models.PositiveIntegerField(
         choices=DifficultyChoices.choices,
+    )
+    fear_degree = models.PositiveIntegerField(
+        choices=DifficultyChoices.choices, null=True, blank=True
+    )
+    activity = models.PositiveIntegerField(
+        choices=DifficultyChoices.choices, null=True, blank=True
     )
     duration_of_time = models.PositiveIntegerField(null=True, blank=True)
     location = models.CharField(max_length=140)
