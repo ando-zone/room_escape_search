@@ -4,7 +4,7 @@ from common.models import CommonModel
 
 # Create your models here.
 class Review(CommonModel):
-    class DifficultyChoices(models.IntegerChoices):
+    class ScoreChoices(models.IntegerChoices):
         ONE = (1, "⭐️")  # (value, label) 괄호는 필수가 아님.
         TWO = (2, "⭐️⭐️")  # (value, label) 괄호는 필수가 아님.
         THREE = (3, "⭐️⭐️⭐️")  # (value, label) 괄호는 필수가 아님.
@@ -24,10 +24,12 @@ class Review(CommonModel):
         on_delete=models.CASCADE,
         related_name="reviews",
     )
-    payload = models.TextField()
-    rating = models.PositiveIntegerField(
-        choices=DifficultyChoices.choices,
-    )
+    rating = models.PositiveIntegerField(choices=ScoreChoices.choices)
+    interior_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
+    story_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
+    creativity_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
+    problem_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
+    equipment_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
 
     class Meta:
         constraints = [
