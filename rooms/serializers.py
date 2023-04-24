@@ -1,12 +1,12 @@
 from rest_framework import serializers
 from .models import Room
-from brands.serializers import BrandSerializer
+from branches.serializers import BranchSerializer
 from reviews.serializers import ReviewSerializer
 from wishlists.models import Wishlist
 
 
 class RoomDetailSerializer(serializers.ModelSerializer):
-    brand = BrandSerializer(read_only=True)
+    branch = BranchSerializer(read_only=True)
     rating = serializers.SerializerMethodField()
     is_liked = serializers.SerializerMethodField()
     # TODO@Ando: api/v1/rooms/1/reviews로 대체합니다.
@@ -34,7 +34,7 @@ class RoomDetailSerializer(serializers.ModelSerializer):
 class RoomListSerializer(serializers.ModelSerializer):
     # TODO@Ando: brand를 여기서 보여주어야 하나 의문... (location이랑 겹침)
     # 애초에 brand 자체가 필요한지도 더 고민해보기. brand 별 review를 달 수는 있음.
-    brand = BrandSerializer()
+    branch = BranchSerializer()
     rating = serializers.SerializerMethodField()
 
     class Meta:
@@ -47,8 +47,7 @@ class RoomListSerializer(serializers.ModelSerializer):
             "genre",
             "difficulty",
             "duration_of_time",
-            "location",
-            "brand",
+            "branch",
             "rating",
         )
         # depth = 1

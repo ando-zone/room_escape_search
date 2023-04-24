@@ -34,9 +34,8 @@ class Room(CommonModel):
         choices=DifficultyChoices.choices, null=True, blank=True
     )
     duration_of_time = models.PositiveIntegerField(null=True, blank=True)
-    location = models.CharField(max_length=140)
-    brand = models.ForeignKey(
-        "brands.Brand",
+    branch = models.ForeignKey(
+        "branches.Branch",
         on_delete=models.CASCADE,
     )
 
