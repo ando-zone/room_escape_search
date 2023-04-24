@@ -7,6 +7,8 @@ class User(AbstractUser):
         MALE = ("male", "Male") # (value, label)
         FEMALE = ("female", "Female") # (value, label)
 
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150, editable=False)
     last_name = models.CharField(max_length=150, editable=False)
     name = models.CharField(max_length=150, default="")
@@ -15,4 +17,6 @@ class User(AbstractUser):
     gender = models.CharField(
         max_length=10,
         choices=GenderChoices.choices,
+        blank=True,
+        null=True
     )

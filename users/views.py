@@ -3,6 +3,7 @@ import requests
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.exceptions import ParseError, NotFound
+from rest_framework.status import HTTP_200_OK, HTTP_406_NOT_ACCEPTABLE, HTTP_201_CREATED
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -18,7 +19,7 @@ class Me(APIView):
         # TODO@Ando: request.user를 한 번 출력해보고 싶다.
         user = request.user
         serializer = serializers.PrivateUserSerializer(user)
-        return Response(serializer.data)
+        return Response(serializer.data, status=HTTP_200_OK)
 
     def put(self, request):
         user = request.user
@@ -30,9 +31,9 @@ class Me(APIView):
         if serializer.is_valid():
             user = serializer.save()
             serializer = serializers.PrivateUserSerializer(user)
-            return Response(serializer.data)
+            return Response(serializer.data, status=HTTP_200_OK)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)
 
 
 class Users(APIView):
@@ -47,9 +48,9 @@ class Users(APIView):
             user.set_password(password)
             user.save()
             serializer = serializers.PrivateUserSerializer(user)
-            return Response(serializer.data)
+            return Response(serializer.data, status=HTTP_201_CREATED)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)
 
 
 class PublicUser(APIView):
@@ -60,7 +61,7 @@ class PublicUser(APIView):
             raise NotFound
         # TODO@Ando: PublicUserSerializer로 바꾸는 것 고민해 봅시다.
         serializer = serializers.PrivateUserSerializer(user)
-        return Response(serializer.data)
+        return Response(serializer.data, status=HTTP_200_OK)
 
 
 class ChangePassword(APIView):
@@ -75,7 +76,9 @@ class ChangePassword(APIView):
         if user.check_password(old_password):
             user.set_password(new_password)
             user.save()
-            return Response(status=status.HTTP_200_OK)
+            return Response(
+                {"ok": "패스워드가 변경되었습니다."}, status=status.HTTP_200_OK
+            )
         else:
             raise ParseError
 
@@ -86,6 +89,7 @@ class LogIn(APIView):
         password = request.data.get("password")
         if not username or not password:
             raise ParseError
+        # TODO@Ando: autheticate와 login, logout에서 request는 왜 필요하고 어떻게 쓰일까?
         user = authenticate(
             request,
             username=username,
@@ -93,10 +97,12 @@ class LogIn(APIView):
         )
         if user:
             login(request, user)
-            return Response({"ok": "Welcome!"})
+            return Response(
+                {"ok": "로그인을 환영합니다!"}, status=status.HTTP_200_OK
+            )
         else:
             return Response(
-                {"error": "wrong password"}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "패스워드가 틀립니다."}, status=status.HTTP_400_BAD_REQUEST
             )
 
 
@@ -105,7 +111,7 @@ class LogOut(APIView):
 
     def post(self, request):
         logout(request)
-        return Response({"ok": "bye!"})
+        return Response({"ok": "다음에 또 만나요!"}, status=status.HTTP_200_OK)
 
 
 class JWTLogIn(APIView):

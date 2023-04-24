@@ -33,3 +33,8 @@ class PrivateUserSerializer(ModelSerializer):
             "groups",
             "user_permissions",
         )
+        read_only_fields = (
+            "last_login",
+            "date_joined",
+            "is_admin",
+        )
