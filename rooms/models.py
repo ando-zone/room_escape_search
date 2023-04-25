@@ -43,18 +43,73 @@ class Room(CommonModel):
     def __str__(self) -> str:
         return self.name
 
-    # TODO@Ando: total_reviews는 어떻게 보여줄 수 있을까? reverse accessors!
-    # TODO@Ando: total_reviews를 이용하여 list_filter를 하는 방법은 없을까?
+    # TODO@Ando: total_reviews는 어떻게 보여줄 수 있을까? 정답은 reverse accessors!
     def total_reviews(self) -> int:
         return self.reviews.count()
 
-    def rating(room):
+    def average_rating(room):
         count = room.reviews.count()
         if count == 0:
             return 0
-        else:
-            total_rating = 0
-            # for review in room.reviews.all()로 적는 것보다 아래가 더 효율적임. (더 최적화 되어 있음.)
-            for review in room.reviews.all().values("rating"):  # 반환값이 딕셔너리임.
-                total_rating += review["rating"]
-            return round(total_rating / count, 2)
+
+        total_rating = 0
+        # for review in room.reviews.all()로 적는 것보다 아래가 더 효율적임. (더 최적화 되어 있음.)
+        for review in room.reviews.all().values("rating"):  # 반환값이 딕셔너리임.
+            total_rating += review["rating"]
+
+        return round(total_rating / count, 2)
+
+    def average_interior_score(room):
+        count = room.reviews.count()
+        if count == 0:
+            return 0
+
+        total_rating = 0
+        for review in room.reviews.all().values("interior_score"):
+            total_rating += review["interior_score"]
+        
+        return round(total_rating / count, 2)
+
+    def average_story_score(room):
+        count = room.reviews.count()
+        if count == 0:
+            return 0
+
+        total_rating = 0
+        for review in room.reviews.all().values("story_score"):
+            total_rating += review["story_score"]
+
+        return round(total_rating / count, 2)
+
+    def average_creativity_score(room):
+        count = room.reviews.count()
+        if count == 0:
+            return 0
+
+        total_rating = 0
+        for review in room.reviews.all().values("creativity_score"):
+            total_rating += review["creativity_score"]
+
+        return round(total_rating / count, 2)
+
+    def average_problem_score(room):
+        count = room.reviews.count()
+        if count == 0:
+            return 0
+
+        total_rating = 0
+        for review in room.reviews.all().values("problem_score"):
+            total_rating += review["problem_score"]
+
+        return round(total_rating / count, 2)
+
+    def average_equipment_score(room):
+        count = room.reviews.count()
+        if count == 0:
+            return 0
+
+        total_rating = 0
+        for review in room.reviews.all().values("equipment_score"):
+            total_rating += review["equipment_score"]
+
+        return round(total_rating / count, 2)

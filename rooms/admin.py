@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import Count
 from .models import Room
 
 # Register your models here.
@@ -17,6 +18,14 @@ def reset_prices(model_admin, request, rooms):
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.annotate(review_count=Count('reviews'))
+        return queryset
+
+    Room.total_reviews.short_description = 'Total Reviews'
+    Room.total_reviews.admin_order_field = 'review_count'
+
     actions = (reset_prices,)
 
     list_display = [
@@ -25,7 +34,7 @@ class RoomAdmin(admin.ModelAdmin):
         "branch",
         "genre",
         "total_reviews",
-        "rating",
+        "average_rating",
         "difficulty",
         "duration_of_time",
     ]
