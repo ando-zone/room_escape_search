@@ -6,10 +6,12 @@ from .models import Branch
 class BranchAdmin(admin.ModelAdmin):
     list_display = [
         "name",
-        "location",
+        "address",
     ]
     list_filter = [
         "name",
+        "city",
+        "district"
     ]
     search_fields = [
         "name__startswith",
