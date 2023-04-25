@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_406_NOT_ACCEPTABLE, HTTP_204_NO_CONTENT
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -20,7 +20,7 @@ class Wishlists(APIView):
             #TODO@Ando: 아래 context의 쓰임 파악하기.
             context={"request": request},
         )
-        return Response(serializer.data)
+        return Response(serializer.data, status=HTTP_200_OK)
 
     def post(self, request):
         serializer = WishlistSerializer(data=request.data)
@@ -29,9 +29,9 @@ class Wishlists(APIView):
                 user=request.user,
             )
             serializer = WishlistSerializer(wishlist)
-            return Response(serializer.data)
+            return Response(serializer.data, status=HTTP_201_CREATED)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)
 
 
 class WishlistDetail(APIView):
@@ -50,12 +50,15 @@ class WishlistDetail(APIView):
             wishlist,
             context={"request": request},
         )
-        return Response(serializer.data)
+        return Response(serializer.data, status=HTTP_200_OK)
 
     def delete(self, request, pk):
         wishlist = self.get_object(pk, request.user)
         wishlist.delete()
-        return Response(status=HTTP_200_OK)
+        return Response(
+            {"ok":"위시리스트가 성공적으로 삭제되었습니다."},
+            status=HTTP_204_NO_CONTENT
+        )
 
     def put(self, request, pk):
         # TODO@Ando: 현재 실질적으로 바꿀 수 있는 것은 'name'뿐.
@@ -71,9 +74,9 @@ class WishlistDetail(APIView):
                 wishlist,
                 context={"request": request},
             )
-            return Response(serializer.data)
+            return Response(serializer.data, status=HTTP_200_OK)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)
 
 
 class WishlistToggle(APIView):
