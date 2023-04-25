@@ -7,7 +7,7 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = (
         "__str__",
         "room",
-        "payload",
+        "rating"
     )
 
     list_filter = (
