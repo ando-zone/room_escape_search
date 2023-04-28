@@ -12,6 +12,7 @@ class BranchSerializer(serializers.ModelSerializer):
         model = Branch
         fields = (
             "pk",
+            "name",
             "address",
             "brand",
             "average_rating"
