@@ -237,6 +237,9 @@ class RoomFilters(APIView):
         room_obj = self.append_rooms_by_avg_score(
             "equipment_score", param2value, room_obj
         )
+        room_obj = self.append_rooms_by_avg_score(
+            "creativity_score", param2value, room_obj
+        )
 
         room_obj = self.append_rooms_by_price(param2value, room_obj)
         room_obj = self.append_rooms_by_duration_of_time(param2value, room_obj)
