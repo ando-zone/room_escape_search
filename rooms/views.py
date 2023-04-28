@@ -1,5 +1,11 @@
+from django.db.models import Avg
 from rest_framework.views import APIView
-from rest_framework.status import HTTP_204_NO_CONTENT, HTTP_200_OK, HTTP_201_CREATED, HTTP_406_NOT_ACCEPTABLE
+from rest_framework.status import (
+    HTTP_204_NO_CONTENT,
+    HTTP_200_OK,
+    HTTP_201_CREATED,
+    HTTP_406_NOT_ACCEPTABLE,
+)
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound, ParseError
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -11,7 +17,6 @@ from reviews.serializers import ReviewSerializer
 
 # Create your views here.
 class Rooms(APIView):
-
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request):
@@ -65,7 +70,8 @@ class RoomDetail(APIView):
             return Response(
                 RoomDetailSerializer(
                     updated_room, context={"request": request}
-                ).data, status=HTTP_200_OK
+                ).data,
+                status=HTTP_200_OK,
             )
         else:
             return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)
@@ -115,3 +121,139 @@ class RoomReviews(APIView):
             return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)
 
     # TODO@Ando: put과 delete는 여기가 아니라 reviews에서 구현해야 할 것 같다.
+
+
+class RoomFilters(APIView):
+    def append_rooms_by_avg_score(self, score_type, param2value, room_obj):
+        min_avg_score_type_key = f"min_avg_{score_type}"
+        max_avg_score_type_key = f"max_avg_{score_type}"
+        reviews_score_type_accessors = f"reviews__{score_type}"
+
+        if (
+            min_avg_score_type_key in param2value
+            and max_avg_score_type_key in param2value
+        ):
+            min_avg = float(param2value[min_avg_score_type_key])
+            max_avg = float(param2value[max_avg_score_type_key])
+            room_obj = room_obj.annotate(
+                avg=Avg(reviews_score_type_accessors)
+            ).filter(avg__gte=min_avg, avg__lte=max_avg)
+
+        elif min_avg_score_type_key in param2value:
+            min_avg = float(param2value[min_avg_score_type_key])
+            room_obj = room_obj.annotate(
+                avg=Avg(reviews_score_type_accessors)
+            ).filter(avg__gte=min_avg)
+            # TODO@Ando: 이미 room 앱에 구현된 average_rating 메서드를 이용하는 방법: 성능면에서 좋지 않고 비효율적임.
+            # for room in room_obj.all():
+            #     if room.average_rating() >= min_avg_rating:
+            #         filtered_rooms.append(room)
+            # room_obj = room_obj.filter(pk__in=[room.pk for room in filtered_rooms]))
+        elif max_avg_score_type_key in param2value:
+            max_avg = float(param2value[max_avg_score_type_key])
+            room_obj = room_obj.annotate(
+                avg=Avg(reviews_score_type_accessors)
+            ).filter(avg__lte=max_avg)
+
+        return room_obj
+
+    def append_rooms_by_price(self, param2value, room_obj):
+        min_price_key = "min_price"
+        max_price_key = "max_price"
+
+        if min_price_key in param2value and max_price_key in param2value:
+            room_obj = room_obj.filter(
+                price__gte=param2value[min_price_key],
+                price__lte=param2value[max_price_key],
+            )
+
+        elif min_price_key in param2value:
+            room_obj = room_obj.filter(price__gte=param2value[min_price_key])
+
+        elif max_price_key in param2value:
+            room_obj = room_obj.filter(price__lte=param2value[max_price_key])
+
+        return room_obj
+
+    def append_rooms_by_duration_of_time(self, param2value, room_obj):
+        min_duration_of_time_key = "min_duration_of_time"
+        max_duration_of_time_key = "max_duration_of_time"
+
+        if (
+            min_duration_of_time_key in param2value
+            and max_duration_of_time_key in param2value
+        ):
+            room_obj = room_obj.filter(
+                duration_of_time__gte=param2value[min_duration_of_time_key],
+                duration_of_time__lte=param2value[max_duration_of_time_key],
+            )
+        elif min_duration_of_time_key in param2value:
+            room_obj = room_obj.filter(
+                duration_of_time__gte=param2value[min_duration_of_time_key]
+            )
+        elif max_duration_of_time_key in param2value:
+            room_obj = room_obj.filter(
+                duration_of_time__lte=param2value[max_duration_of_time_key]
+            )
+
+        return room_obj
+
+    # TODO@Ando: branch에 제대로 속성 정리가 안되어 있음. 그리고 branch_name도 추가해야 함.
+    def get(self, request):
+        param2value = dict()
+        for key, val in request.query_params.items():
+            param2value[key] = val
+
+        room_obj = Room.objects
+
+        if "city" in param2value:
+            city_list = param2value["city"].split(",")
+            room_obj = room_obj.filter(branch__city__in=city_list)
+        if "district" in param2value:
+            district_list = param2value["district"].split(",")
+            room_obj = room_obj.filter(branch__district__in=district_list)
+        if "difficulty" in param2value:
+            difficulty_list = param2value["difficulty"].split(",")
+            room_obj = room_obj.filter(difficulty__in=difficulty_list)
+        if "fear_degree" in param2value:
+            fear_degree_list = param2value["fear_degree"].split(",")
+            room_obj = room_obj.filter(branch__fear_degree__in=fear_degree_list)
+        if "activity" in param2value:
+            activity_list = param2value["activity"].split(",")
+            room_obj = room_obj.filter(branch__activity__in=activity_list)
+
+        room_obj = self.append_rooms_by_avg_score(
+            "rating", param2value, room_obj
+        )
+        room_obj = self.append_rooms_by_avg_score(
+            "interior_score", param2value, room_obj
+        )
+        room_obj = self.append_rooms_by_avg_score(
+            "story_score", param2value, room_obj
+        )
+        room_obj = self.append_rooms_by_avg_score(
+            "problem_score", param2value, room_obj
+        )
+        room_obj = self.append_rooms_by_avg_score(
+            "equipment_score", param2value, room_obj
+        )
+
+        room_obj = self.append_rooms_by_price(param2value, room_obj)
+        room_obj = self.append_rooms_by_duration_of_time(param2value, room_obj)
+
+        if "brand_name" in param2value:
+            room_obj = room_obj.filter(
+                branch__brand__name__contains=param2value["brand_name"]
+            )
+        if "branch_name" in param2value:
+            room_obj = room_obj.filter(
+                branch__name__contains=param2value["branch_name"]
+            )
+        if "name" in param2value:
+            room_obj = room_obj.filter(name__contains=param2value["name"])
+        if "genre" in param2value:
+            room_obj = room_obj.filter(genre__contains=param2value["genre"])
+
+        serializer = RoomListSerializer(room_obj, many=True)
+
+        return Response(serializer.data, status=HTTP_200_OK)
