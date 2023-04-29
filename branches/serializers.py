@@ -25,6 +25,7 @@ class BranchSerializer(serializers.ModelSerializer):
 
         for room in rooms:
             room_rating = room.average_rating()
+            # 평점이 한 번도 매겨지지 않았으면 해당 방은 제외
             if not room_rating:
                 continue
 
