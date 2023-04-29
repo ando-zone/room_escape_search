@@ -1,5 +1,10 @@
 from rest_framework.views import APIView
-from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_406_NOT_ACCEPTABLE, HTTP_204_NO_CONTENT
+from rest_framework.status import (
+    HTTP_200_OK,
+    HTTP_201_CREATED,
+    HTTP_406_NOT_ACCEPTABLE,
+    HTTP_204_NO_CONTENT,
+)
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -9,17 +14,11 @@ from .serializers import WishlistSerializer
 
 
 class Wishlists(APIView):
-
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         all_wishlists = Wishlist.objects.filter(user=request.user)
-        serializer = WishlistSerializer(
-            all_wishlists,
-            many=True,
-            #TODO@Ando: 아래 context의 쓰임 파악하기.
-            context={"request": request},
-        )
+        serializer = WishlistSerializer(all_wishlists, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
     def post(self, request):
@@ -35,7 +34,6 @@ class Wishlists(APIView):
 
 
 class WishlistDetail(APIView):
-
     permission_classes = [IsAuthenticated]
 
     def get_object(self, pk, user):
@@ -46,18 +44,14 @@ class WishlistDetail(APIView):
 
     def get(self, request, pk):
         wishlist = self.get_object(pk, request.user)
-        serializer = WishlistSerializer(
-            wishlist,
-            context={"request": request},
-        )
+        serializer = WishlistSerializer(wishlist)
         return Response(serializer.data, status=HTTP_200_OK)
 
     def delete(self, request, pk):
         wishlist = self.get_object(pk, request.user)
         wishlist.delete()
         return Response(
-            {"ok":"위시리스트가 성공적으로 삭제되었습니다."},
-            status=HTTP_204_NO_CONTENT
+            {"ok": "위시리스트가 성공적으로 삭제되었습니다."}, status=HTTP_204_NO_CONTENT
         )
 
     def put(self, request, pk):
@@ -70,17 +64,15 @@ class WishlistDetail(APIView):
         )
         if serializer.is_valid():
             wishlist = serializer.save()
-            serializer = WishlistSerializer(
-                wishlist,
-                context={"request": request},
-            )
+            serializer = WishlistSerializer(wishlist)
             return Response(serializer.data, status=HTTP_200_OK)
         else:
             return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)
 
 
 class WishlistToggle(APIView):
-    # TODO@Ando: 이게 실제로 front에서 어떻게 구현될지 너무 궁금함. (역시 해야겠다 프론트.)
+    permission_classes = [IsAuthenticated]
+
     def get_list(self, pk, user):
         try:
             return Wishlist.objects.get(pk=pk, user=user)
