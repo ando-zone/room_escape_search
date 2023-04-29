@@ -24,9 +24,11 @@ class BranchSerializer(serializers.ModelSerializer):
         total_rooms = 0
 
         for room in rooms:
-            room_reviews_count = room.reviews.count()
-            if room_reviews_count:
-                total_rating += room.average_rating()
-                total_rooms += 1
+            room_rating = room.average_rating()
+            if not room_rating:
+                continue
+
+            total_rating += room.average_rating()
+            total_rooms += 1
 
         return round(total_rating / total_rooms,2) if total_rooms else 0
