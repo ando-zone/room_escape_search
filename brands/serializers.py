@@ -25,6 +25,10 @@ class BrandSerializer(serializers.ModelSerializer):
 
         for branch in branches:
             branch_rating = branch_serializer_obj.get_average_rating(branch)
+            # 평점이 한 번도 매겨지지 않았으면 해당 브랜치는 제외
+            if not branch_rating:
+                continue
+            
             total_rating += branch_rating
             total_branches += 1
 
