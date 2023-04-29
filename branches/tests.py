@@ -1,6 +1,5 @@
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 from .models import Branch
 from .serializers import BranchSerializer
 from brands.models import Brand
@@ -8,10 +7,8 @@ from reviews.models import Review
 from rooms.models import Room
 
 
-class BranchesTestCase(TestCase):
+class BranchesAPITest(APITestCase):
     def setUp(self):
-        self.client = APIClient()
-
         # Sample brands for testing
         self.brand1 = Brand.objects.create(
             name="Brand 1", description="Best Brand"
@@ -68,7 +65,7 @@ class BranchesTestCase(TestCase):
         self.assertEqual(response.data, serializer.data)
 
 
-class BranchSerializerTestCase(TestCase):
+class BranchSerializerTestCase(APITestCase):
     def test_get_average_rating(self):
         brand = Brand.objects.create(name="Brand A")
         branch = Branch.objects.create(
@@ -86,6 +83,7 @@ class BranchSerializerTestCase(TestCase):
             price="10000",
             difficulty=1,
         )
+        # 한 번도 평점이 매겨지지 않은 room
         room3 = Room.objects.create(
             name="Room 3",
             branch=branch,
