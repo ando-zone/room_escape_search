@@ -26,6 +26,7 @@ class Room(CommonModel):
     activity = models.PositiveIntegerField(
         choices=DegreeChoices.choices, null=True, blank=True
     )
+    recommended_numb = models.PositiveIntegerField(null=True, blank=True)
     time_duration = models.PositiveIntegerField(null=True, blank=True)
     image_url = models.URLField(null=True, blank=True, max_length=1000)
     branch = models.ForeignKey(
@@ -61,7 +62,7 @@ class Room(CommonModel):
         total_rating = 0
         for review in room.reviews.all().values("interior_score"):
             total_rating += review["interior_score"]
-        
+
         return round(total_rating / count, 2)
 
     def average_story_score(room):
