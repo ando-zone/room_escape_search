@@ -8,23 +8,28 @@ from common.models import CommonModel
 class Room(CommonModel):
     """Model Definition for Rooms"""
 
-    class DegreeChoices(models.IntegerChoices):
+    class DegreeIntChoices(models.IntegerChoices):
         ONE = (1, "🔑")  # (value, label) 괄호는 필수가 아님.
         TWO = (2, "🔑🔑")
         THREE = (3, "🔑🔑🔑")
         FOUR = (4, "🔑🔑🔑🔑")
         FIVE = (5, "🔑🔑🔑🔑🔑")
 
+    class ActivityDegreeChoices(models.TextChoices):
+        LOW = ("낮음", "🔑")
+        MIDDLE = ("중간", "🔑🔑")
+        HIGH = ("높음", "🔑🔑🔑")
+
     name = models.CharField(max_length=140)
     genre = models.CharField(max_length=140, null=True, blank=True)
     difficulty = models.PositiveIntegerField(
-        choices=DegreeChoices.choices, null=True, blank=True
+        choices=DegreeIntChoices.choices, null=True, blank=True
     )
     fear_degree = models.PositiveIntegerField(
-        choices=DegreeChoices.choices, null=True, blank=True
+        choices=DegreeIntChoices.choices, null=True, blank=True
     )
-    activity = models.PositiveIntegerField(
-        choices=DegreeChoices.choices, null=True, blank=True
+    activity = models.TextField(
+        choices=ActivityDegreeChoices.choices, null=True, blank=True
     )
     recommended_numb = models.PositiveIntegerField(null=True, blank=True)
     time_duration = models.PositiveIntegerField(null=True, blank=True)
