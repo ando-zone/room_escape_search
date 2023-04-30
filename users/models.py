@@ -9,11 +9,9 @@ class User(AbstractUser):
 
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(max_length=150, unique=True)
-    first_name = models.CharField(max_length=150, editable=False)
-    last_name = models.CharField(max_length=150, editable=False)
     name = models.CharField(max_length=150, default="")
     is_admin = models.BooleanField(default=False) #non-nullable field (True of False)
-    avatar = models.URLField(blank=True)
+    avatar = models.URLField(null=True, blank=True)
     gender = models.CharField(
         max_length=10,
         choices=GenderChoices.choices,

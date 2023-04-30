@@ -25,11 +25,21 @@ class Review(CommonModel):
         related_name="reviews",
     )
     rating = models.PositiveIntegerField(choices=ScoreChoices.choices)
-    interior_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
-    story_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
-    creativity_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
-    problem_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
-    equipment_score = models.PositiveIntegerField(choices=ScoreChoices.choices)
+    interior_score = models.PositiveIntegerField(
+        choices=ScoreChoices.choices, null=True, blank=True
+    )
+    story_score = models.PositiveIntegerField(
+        choices=ScoreChoices.choices, null=True, blank=True
+    )
+    creativity_score = models.PositiveIntegerField(
+        choices=ScoreChoices.choices, null=True, blank=True
+    )
+    problem_score = models.PositiveIntegerField(
+        choices=ScoreChoices.choices, null=True, blank=True
+    )
+    equipment_score = models.PositiveIntegerField(
+        choices=ScoreChoices.choices, null=True, blank=True
+    )
 
     class Meta:
         constraints = [

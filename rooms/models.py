@@ -20,8 +20,8 @@ class Room(CommonModel):
         MIDDLE = ("중간", "🔑🔑")
         HIGH = ("높음", "🔑🔑🔑")
 
-    name = models.CharField(max_length=140)
-    genre = models.CharField(max_length=140, null=True, blank=True)
+    name = models.CharField(max_length=100)
+    genre = models.CharField(max_length=50, null=True, blank=True)
     difficulty = models.PositiveIntegerField(
         choices=DegreeIntChoices.choices, null=True, blank=True
     )
