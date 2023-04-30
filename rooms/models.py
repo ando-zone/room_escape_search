@@ -8,25 +8,23 @@ from common.models import CommonModel
 class Room(CommonModel):
     """Model Definition for Rooms"""
 
-    class DifficultyChoices(models.IntegerChoices):
+    class DegreeChoices(models.IntegerChoices):
         ONE = (1, "🔑")  # (value, label) 괄호는 필수가 아님.
-        TWO = (2, "🔑🔑")  # (value, label) 괄호는 필수가 아님.
-        THREE = (3, "🔑🔑🔑")  # (value, label) 괄호는 필수가 아님.
-        FOUR = (4, "🔑🔑🔑🔑")  # (value, label) 괄호는 필수가 아님.
-        FIVE = (5, "🔑🔑🔑🔑🔑")  # (value, label) 괄호는 필수가 아님.
-
-    # TODO@Ando: Description 추가해야 함.
+        TWO = (2, "🔑🔑")
+        THREE = (3, "🔑🔑🔑")
+        FOUR = (4, "🔑🔑🔑🔑")
+        FIVE = (5, "🔑🔑🔑🔑🔑")
 
     name = models.CharField(max_length=140)
     genre = models.CharField(max_length=140, null=True, blank=True)
     difficulty = models.PositiveIntegerField(
-        choices=DifficultyChoices.choices,
+        choices=DegreeChoices.choices, null=True, blank=True
     )
     fear_degree = models.PositiveIntegerField(
-        choices=DifficultyChoices.choices, null=True, blank=True
+        choices=DegreeChoices.choices, null=True, blank=True
     )
     activity = models.PositiveIntegerField(
-        choices=DifficultyChoices.choices, null=True, blank=True
+        choices=DegreeChoices.choices, null=True, blank=True
     )
     time_duration = models.PositiveIntegerField(null=True, blank=True)
     image = models.URLField(null=True, blank=True, max_length=1000)
