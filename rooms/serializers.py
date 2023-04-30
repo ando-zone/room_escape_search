@@ -58,7 +58,7 @@ class RoomListSerializer(serializers.ModelSerializer):
         fields = (
             "pk",
             "name",
-            "image",
+            "image_url",
             "genre",
             "difficulty",
             "time_duration",

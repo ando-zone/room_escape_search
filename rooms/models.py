@@ -27,7 +27,7 @@ class Room(CommonModel):
         choices=DegreeChoices.choices, null=True, blank=True
     )
     time_duration = models.PositiveIntegerField(null=True, blank=True)
-    image = models.URLField(null=True, blank=True, max_length=1000)
+    image_url = models.URLField(null=True, blank=True, max_length=1000)
     branch = models.ForeignKey(
         "branches.Branch",
         on_delete=models.CASCADE,
