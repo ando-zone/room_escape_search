@@ -74,20 +74,17 @@ class BranchSerializerTestCase(APITestCase):
         room1 = Room.objects.create(
             name="Room 1",
             branch=branch,
-            price="10000",
             difficulty=1,
         )
         room2 = Room.objects.create(
             name="Room 2",
             branch=branch,
-            price="10000",
             difficulty=1,
         )
         # 한 번도 평점이 매겨지지 않은 room
         room3 = Room.objects.create(
             name="Room 3",
             branch=branch,
-            price="10000",
             difficulty=1,
         )
 

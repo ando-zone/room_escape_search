@@ -23,10 +23,10 @@ class WishlistsAPITest(APITestCase):
             name="tset_Branch", address="Address 1", brand=test_brand
         )
         test_room_A = Room.objects.create(
-            name="test_room_A", price=10000, difficulty=1, branch=test_branch
+            name="test_room_A", difficulty=1, branch=test_branch
         )
         test_room_B = Room.objects.create(
-            name="test_room_B", price=10000, difficulty=1, branch=test_branch
+            name="test_room_B", difficulty=1, branch=test_branch
         )
         self.wishlist = Wishlist.objects.create(
             name="test_wishlist_A",

@@ -61,7 +61,7 @@ class RoomListSerializer(serializers.ModelSerializer):
             "image",
             "genre",
             "difficulty",
-            "duration_of_time",
+            "time_duration",
             "branch",
             "average_rating",
         )

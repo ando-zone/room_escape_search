@@ -30,19 +30,17 @@ class RoomAdmin(admin.ModelAdmin):
 
     list_display = [
         "name",
-        "price",
         "branch",
         "genre",
         "total_reviews",
         "average_rating",
         "difficulty",
-        "duration_of_time",
+        "time_duration",
     ]
     list_filter = [
         "name",
-        "price",
         "genre",
         "difficulty",
-        "duration_of_time",
+        "time_duration",
     ]
     search_fields = ["name__startswith"]

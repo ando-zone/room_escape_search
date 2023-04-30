@@ -49,19 +49,16 @@ class BrandSerializerTestCase(APITestCase):
         room1 = Room.objects.create(
             name="Room 1",
             branch=branch_1,
-            price="10000",
             difficulty=1,
         )
         room2 = Room.objects.create(
             name="Room 2",
             branch=branch_1,
-            price="10000",
             difficulty=1,
         )
         room3 = Room.objects.create(
             name="Room 3",
             branch=branch_2,
-            price="10000",
             difficulty=1,
         )
 
