@@ -6,3 +6,5 @@
 
 * Enhanced Entity Relationship(EER) Diagram
 
+    ![room_escape_diagram](https://user-images.githubusercontent.com/119149274/235348174-1ad1ba52-5268-41ec-9ba2-4c4c85ac797d.png)
+
