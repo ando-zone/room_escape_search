@@ -47,7 +47,6 @@ Authorization: Token {access_token}
 </details>
 
 
-* Enhanced Entity Relationship(EER) Diagram으로 한 눈에 확인하는 model 구조
-
-    ![room_escape_diagram](https://user-images.githubusercontent.com/119149274/235348174-1ad1ba52-5268-41ec-9ba2-4c4c85ac797d.png)
+## **EER Diagram으로 한 눈에 확인하는 model 구조**
+![room_escape_diagram](https://user-images.githubusercontent.com/119149274/235348174-1ad1ba52-5268-41ec-9ba2-4c4c85ac797d.png)
 
