@@ -60,47 +60,47 @@ Authorization: Token {access_token}
 <details>
     <summary>rooms 모델 (클릭하여 목록 확인하기)</summary>
     
-* Rooms API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* Rooms API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/Rooms-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-* RoomDetail API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EB%A1%9C%EA%B7%B8%EC%9D%B8-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* RoomDetail API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/RoomDetail-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-* RoomReviews API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* RoomReviews API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/RoomReviews-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-* RoomFilters API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%8C%A8%EC%8A%A4%EC%9B%8C%EB%93%9C-%EB%B3%80%EA%B2%BD-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* RoomFilters API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/RoomFilters-API-EndPoint-%EB%AA%A9%EB%A1%9D))
     
 </details>
 
 <details>
     <summary>wishlists 모델 (클릭하여 목록 확인하기)</summary>
     
-* Wishlists API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* Wishlists API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/Wishlists-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-* WishlistsDetail API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EB%A1%9C%EA%B7%B8%EC%9D%B8-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* WishlistsDetail API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/WishlistsDetail-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-* WishlistsToggle API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* WishlistsToggle API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/WishlistsToggle-API-EndPoint-%EB%AA%A9%EB%A1%9D))
     
 </details>
 
 <details>
     <summary>brands 모델 (클릭하여 목록 확인하기)</summary>
     
-* Brands API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* Brands API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/Brands-API-EndPoint-%EB%AA%A9%EB%A1%9D))
     
 </details>
 
 <details>
     <summary>branches 모델 (클릭하여 목록 확인하기)</summary>
     
-* Branches API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* Branches API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/Branches-API-EndPoint-%EB%AA%A9%EB%A1%9D))
 
 </details>
 
 <details>
     <summary>users 모델 (클릭하여 목록 확인하기)</summary>
     
-* Me API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* Me API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/Me-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-* PublicUser API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EB%A1%9C%EA%B7%B8%EC%9D%B8-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+* PublicUser API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/PublicUser-API-EndPoint-%EB%AA%A9%EB%A1%9D))
 
 </details>
 
