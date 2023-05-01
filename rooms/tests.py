@@ -9,7 +9,7 @@ from brands.models import Brand
 from users.models import User
 
 
-class TestRooms(APITestCase):
+class RoomsAPITest(APITestCase):
     def setUp(self):
         user = User.objects.create(username="test")
         user.set_password("123")
