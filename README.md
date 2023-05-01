@@ -38,13 +38,13 @@ Authorization: Token {access_token}
  
   * 로그인 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EB%A1%9C%EA%B7%B8%EC%9D%B8-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-  * 로그아웃 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+  * 로그아웃 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-  * 패스워드 변경 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+  * 패스워드 변경 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%8C%A8%EC%8A%A4%EC%9B%8C%EB%93%9C-%EB%B3%80%EA%B2%BD-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-  * 깃허브 로그인 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+  * 깃허브 로그인 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EA%B9%83%ED%97%88%EB%B8%8C-%EB%A1%9C%EA%B7%B8%EC%9D%B8-API-EndPoint-%EB%AA%A9%EB%A1%9D))
  
-  * 카카오 로그인 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
+  * 카카오 로그인 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EC%B9%B4%EC%B9%B4%EC%98%A4-%EB%A1%9C%EA%B7%B8%EC%9D%B8-API-EndPoint-%EB%AA%A9%EB%A1%9D))
 </details>
 
 
