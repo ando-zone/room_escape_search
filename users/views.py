@@ -3,7 +3,11 @@ import requests
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.exceptions import ParseError, NotFound
-from rest_framework.status import HTTP_200_OK, HTTP_406_NOT_ACCEPTABLE, HTTP_201_CREATED
+from rest_framework.status import (
+    HTTP_200_OK,
+    HTTP_406_NOT_ACCEPTABLE,
+    HTTP_201_CREATED,
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -76,9 +80,7 @@ class ChangePassword(APIView):
         if user.check_password(old_password):
             user.set_password(new_password)
             user.save()
-            return Response(
-                {"ok": "패스워드가 변경되었습니다."}, status=status.HTTP_200_OK
-            )
+            return Response({"ok": "패스워드가 변경되었습니다."}, status=status.HTTP_200_OK)
         else:
             raise ParseError
 
@@ -97,9 +99,7 @@ class LogIn(APIView):
         )
         if user:
             login(request, user)
-            return Response(
-                {"ok": "로그인을 환영합니다!"}, status=status.HTTP_200_OK
-            )
+            return Response({"ok": "로그인을 환영합니다!"}, status=status.HTTP_200_OK)
         else:
             return Response(
                 {"error": "패스워드가 틀립니다."}, status=status.HTTP_400_BAD_REQUEST
@@ -166,7 +166,9 @@ class GithubLogIn(APIView):
             try:
                 user = User.objects.get(email=user_emails[0]["email"])
                 login(request, user)
-                return Response(status=status.HTTP_200_OK)
+                return Response(
+                    {"ok": "로그인을 환영합니다!"}, status=status.HTTP_200_OK
+                )
             except User.DoesNotExist:
                 user = User.objects.create(
                     username=user_data.get("login"),
@@ -177,9 +179,14 @@ class GithubLogIn(APIView):
                 user.set_unusable_password()
                 user.save()
                 login(request, user)
-                return Response(status=status.HTTP_200_OK)
+                return Response(
+                    {"ok": "로그인을 환영합니다!"}, status=status.HTTP_200_OK
+                )
         except Exception:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "인증 코드가 유효하지 않거나, GitHub API 호출 과정에서 문제가 발생했습니다."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 class KakaoLogIn(APIView):
@@ -210,7 +217,9 @@ class KakaoLogIn(APIView):
             try:
                 user = User.objects.get(email=kakao_account.get("email"))
                 login(request, user)
-                return Response(status=status.HTTP_200_OK)
+                return Response(
+                    {"ok": "로그인을 환영합니다!"}, status=status.HTTP_200_OK
+                )
             except User.DoesNotExist:
                 user = User.objects.create(
                     username=profile.get("nickname"),
@@ -221,6 +230,11 @@ class KakaoLogIn(APIView):
                 user.set_unusable_password()
                 user.save()
                 login(request, user)
-                return Response(status=status.HTTP_200_OK)
+                return Response(
+                    {"ok": "로그인을 환영합니다!"}, status=status.HTTP_200_OK
+                )
         except Exception:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "인증 코드가 유효하지 않거나, Kakao API 호출 과정에서 문제가 발생했습니다."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
