@@ -31,7 +31,7 @@ Authorization: Token {access_token}
 회원 가입 시에는 이메일, 닉네임, 비밀번호가 필요하며 로그인 시에는 닉네임과 비밀번호를 사용합니다.
 
 <details>
-  <summary>API EndPoint 목록</summary>
+  <summary>API EndPoint 목록 (클릭하여 목록 확인하기)</summary>
   
 
   * 회원 가입 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-API-EndPoint-%EB%AA%A9%EB%A1%9D))
