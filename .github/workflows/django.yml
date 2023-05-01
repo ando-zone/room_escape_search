@@ -32,9 +32,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run Tests
       run: |
-        pip install pytest-cov
-        mkdir logs
-        coverage run -m --source=. pytest
+        coverage run --source=my_app manage.py test
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         SECRET_GITHUB: ${{ secrets.SECRET_GITHUB }}
