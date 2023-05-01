@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rooms.models import Room
 from .models import Wishlist
-from .serializers import WishlistSerializer
+from .serializers import WishlistListSerializer, WishlistDetailSerializer
 
 
 class Wishlists(APIView):
@@ -18,16 +18,16 @@ class Wishlists(APIView):
 
     def get(self, request):
         all_wishlists = Wishlist.objects.filter(user=request.user)
-        serializer = WishlistSerializer(all_wishlists, many=True)
+        serializer = WishlistListSerializer(all_wishlists, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
 
     def post(self, request):
-        serializer = WishlistSerializer(data=request.data)
+        serializer = WishlistListSerializer(data=request.data)
         if serializer.is_valid():
             wishlist = serializer.save(
                 user=request.user,
             )
-            serializer = WishlistSerializer(wishlist)
+            serializer = WishlistListSerializer(wishlist)
             return Response(serializer.data, status=HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)
@@ -44,7 +44,7 @@ class WishlistDetail(APIView):
 
     def get(self, request, pk):
         wishlist = self.get_object(pk, request.user)
-        serializer = WishlistSerializer(wishlist)
+        serializer = WishlistDetailSerializer(wishlist)
         return Response(serializer.data, status=HTTP_200_OK)
 
     def delete(self, request, pk):
@@ -57,14 +57,14 @@ class WishlistDetail(APIView):
     def put(self, request, pk):
         # TODO@Ando: 현재 실질적으로 바꿀 수 있는 것은 'name'뿐.
         wishlist = self.get_object(pk, request.user)
-        serializer = WishlistSerializer(
+        serializer = WishlistDetailSerializer(
             wishlist,
             data=request.data,
             partial=True,
         )
         if serializer.is_valid():
             wishlist = serializer.save()
-            serializer = WishlistSerializer(wishlist)
+            serializer = WishlistDetailSerializer(wishlist)
             return Response(serializer.data, status=HTTP_200_OK)
         else:
             return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)

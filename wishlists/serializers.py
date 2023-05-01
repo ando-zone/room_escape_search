@@ -3,7 +3,16 @@ from rooms.serializers import RoomListSerializer
 from .models import Wishlist
 
 
-class WishlistSerializer(ModelSerializer):
+class WishlistListSerializer(ModelSerializer):
+    class Meta:
+        model = Wishlist
+        fields = (
+            "pk",
+            "name",
+        )
+
+
+class WishlistDetailSerializer(ModelSerializer):
 
     rooms = RoomListSerializer(
         many=True,

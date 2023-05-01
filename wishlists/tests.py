@@ -6,7 +6,7 @@ from brands.models import Brand
 from rooms.models import Room
 from users.models import User
 from .models import Wishlist
-from .serializers import WishlistSerializer
+from .serializers import WishlistListSerializer, WishlistDetailSerializer
 
 
 class WishlistsAPITest(APITestCase):
@@ -44,7 +44,7 @@ class WishlistsAPITest(APITestCase):
 
         response = self.client.get(url)
         wishlist = Wishlist.objects.all()
-        serializer = WishlistSerializer(wishlist, many=True)
+        serializer = WishlistListSerializer(wishlist, many=True)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, serializer.data)
@@ -60,7 +60,7 @@ class WishlistsAPITest(APITestCase):
 
         response = self.client.post(url, data=data)
         wishlist = Wishlist.objects.get(name="test_wishlist_B")
-        serializer = WishlistSerializer(wishlist)
+        serializer = WishlistListSerializer(wishlist)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data, serializer.data)
 
@@ -91,7 +91,7 @@ class WishlistsAPITest(APITestCase):
 
         response = self.client.get(url)
         wishlist = Wishlist.objects.get(pk=pk_number)
-        serializer = WishlistSerializer(wishlist)
+        serializer = WishlistDetailSerializer(wishlist)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, serializer.data)
 
@@ -151,7 +151,7 @@ class WishlistsAPITest(APITestCase):
         self.assertEqual(response.status_code, 200)
 
         wishlist = Wishlist.objects.get(pk=pk_wishlist_num)
-        serializer = WishlistSerializer(wishlist)
+        serializer = WishlistDetailSerializer(wishlist)
         self.assertEqual(len(serializer.data["rooms"]), 1)
         self.assertNotEqual(serializer.data["rooms"][0]["pk"], pk_room_num)
 
@@ -162,6 +162,6 @@ class WishlistsAPITest(APITestCase):
         self.assertEqual(response.status_code, 200)
 
         wishlist = Wishlist.objects.get(pk=pk_wishlist_num)
-        serializer = WishlistSerializer(wishlist)
+        serializer = WishlistDetailSerializer(wishlist)
         self.assertEqual(len(serializer.data["rooms"]), 2)
         self.assertEqual(serializer.data["rooms"][0]["pk"], pk_room_num)
