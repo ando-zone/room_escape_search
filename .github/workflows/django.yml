@@ -25,3 +25,4 @@ jobs:
         python manage.py test
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        SECRET_GITHUB: ${{ secrets.SECRET_GITHUB }}
