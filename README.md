@@ -20,7 +20,7 @@
 
 특이사항으로는 POST 요청 시에, 헤더에 “X-CSRFToken” 이라는 키 값으로 csrf token 정보를 전달해 주어야 합니다. 이는 CSRF 공격으로부터 서버를 보호하기 위함입니다. 참고로 Django에서 CSRF 토큰은 기본적으로 csrftoken이라는 이름의 쿠키에 저장됩니다.
 
-```json
+```
 {
     "X-CSRFToken": {csrf_token}
 }
@@ -32,7 +32,7 @@
 
 **예시)**
 
-```json
+```
 Authorization: Token {access_token}
 ```
 
