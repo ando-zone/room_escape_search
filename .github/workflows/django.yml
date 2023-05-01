@@ -32,7 +32,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run Tests
       run: |
-        coverage run --source=my_app manage.py test
+        python manage.py test
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         SECRET_GITHUB: ${{ secrets.SECRET_GITHUB }}
