@@ -47,6 +47,39 @@ Authorization: Token {access_token}
   * 카카오 로그인 API EndPoint 목록 ([Link 바로가기](https://github.com/ando-zone/room_escape_search/wiki/%EC%B9%B4%EC%B9%B4%EC%98%A4-%EB%A1%9C%EA%B7%B8%EC%9D%B8-API-EndPoint-%EB%AA%A9%EB%A1%9D))
 </details>
 
+## ****API 엔드포인트 목록****
+
+- **rooms 모델**
+    
+    [Rooms API EndPoint 목록](https://www.notion.so/Rooms-API-EndPoint-e8485ef3a76c47ecaf2c98de79d5ebbb)
+    
+    [RoomDetail API EndPoint 목록](https://www.notion.so/RoomDetail-API-EndPoint-df1f3687a9224ad48d29da6e3d9235e0)
+    
+    [RoomReviews API EndPoint 목록](https://www.notion.so/RoomReviews-API-EndPoint-c919d34101864cfaad3a0bfc181bd53b)
+    
+    [RoomFilters API EndPoint 목록](https://www.notion.so/RoomFilters-API-EndPoint-e03b2673866d44f0a8441349c62bc61d)
+    
+- **wishlists 모델**
+    
+    [Wishlists API EndPoint 목록](https://www.notion.so/Wishlists-API-EndPoint-40e4297c3845427ba6e7191a44bac2d7)
+    
+    [WishlistsDetail API EndPoint 목록](https://www.notion.so/WishlistsDetail-API-EndPoint-924cfe140dca4dd38bc2328d125d4635)
+    
+    [WishlistsToggle API EndPoint 목록](https://www.notion.so/WishlistsToggle-API-EndPoint-9ccadf59803c4153944f250810255dea)
+    
+- **brands 모델**
+    
+    [Brands API EndPoint 목록](https://www.notion.so/Brands-API-EndPoint-3a23253c359b4120929f2d256dc6ecd6)
+ 
+- **branches 모델**
+    
+    [Branches API EndPoint 목록](https://www.notion.so/Branches-API-EndPoint-1f6d4e281ad34afa865124229c7b2f3b)
+    
+- **users 모델**
+    
+    [Me API EndPoint 목록](https://www.notion.so/Me-API-EndPoint-49522132bad54952a211ed70974f39fc)
+    
+    [PublicUser API EndPoint 목록](https://www.notion.so/PublicUser-API-EndPoint-caaeb00f813b49ffa87ccdb4247c787a)
 
 ## **EER Diagram으로 한 눈에 확인하는 model 구조**
 ![room_escape_diagram](https://user-images.githubusercontent.com/119149274/235348174-1ad1ba52-5268-41ec-9ba2-4c4c85ac797d.png)
