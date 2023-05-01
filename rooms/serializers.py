@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Room
 from branches.serializers import BranchSerializer
-from reviews.serializers import ReviewSerializer
 from wishlists.models import Wishlist
 
 
@@ -47,14 +46,11 @@ class RoomDetailSerializer(serializers.ModelSerializer):
         return False
 
 class RoomListSerializer(serializers.ModelSerializer):
-    # TODO@Ando: brand를 여기서 보여주어야 하나 의문... (location이랑 겹침)
-    # 애초에 brand 자체가 필요한지도 더 고민해보기. brand 별 review를 달 수는 있음.
     branch = BranchSerializer()
     average_rating = serializers.SerializerMethodField()
 
     class Meta:
         model = Room
-        # fields = "__all__"
         fields = (
             "pk",
             "name",
@@ -65,7 +61,6 @@ class RoomListSerializer(serializers.ModelSerializer):
             "branch",
             "average_rating",
         )
-        # depth = 1
 
     def get_average_rating(self, room):
         return room.average_rating()
