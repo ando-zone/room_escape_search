@@ -141,7 +141,7 @@ class GithubLogIn(APIView):
         try:
             code = request.data.get("code")
             access_token = requests.post(
-                f"https://github.com/login/oauth/access_token?code={code}&client_id=faa85bb702ec265f6120&client_secret={settings.GITHUB_SECRET}",
+                f"https://github.com/login/oauth/access_token?code={code}&client_id=faa85bb702ec265f6120&client_secret={settings.SECRET_GITHUB}",
                 # json response를 받기 위해서 json response를 요청하는 과정
                 headers={"Accept": "application/json"},
             )
