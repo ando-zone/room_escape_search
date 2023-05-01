@@ -48,7 +48,7 @@ Authorization: Token {access_token}
     
 </details>
 
-## ****API 엔드포인트 목록****
+## ****주요 API 엔드포인트 목록****
 <details>
     <summary>rooms 모델 (클릭하여 목록 확인하기)</summary>
     
