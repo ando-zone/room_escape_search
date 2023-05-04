@@ -120,8 +120,6 @@ class RoomReviews(APIView):
         else:
             return Response(serializer.errors, status=HTTP_406_NOT_ACCEPTABLE)
 
-    # TODO@Ando: put과 delete는 여기가 아니라 reviews에서 구현해야 할 것 같다.
-
 
 class RoomFilters(APIView):
     def append_rooms_by_avg_score(self, score_type, param2value, room_obj):
@@ -138,17 +136,11 @@ class RoomFilters(APIView):
             room_obj = room_obj.annotate(
                 avg=Avg(reviews_score_type_accessors)
             ).filter(avg__gte=min_avg, avg__lte=max_avg)
-
         elif min_avg_score_type_key in param2value:
             min_avg = float(param2value[min_avg_score_type_key])
             room_obj = room_obj.annotate(
                 avg=Avg(reviews_score_type_accessors)
             ).filter(avg__gte=min_avg)
-            # TODO@Ando: 이미 room 앱에 구현된 average_rating 메서드를 이용하는 방법: 성능면에서 좋지 않고 비효율적임.
-            # for room in room_obj.all():
-            #     if room.average_rating() >= min_avg_rating:
-            #         filtered_rooms.append(room)
-            # room_obj = room_obj.filter(pk__in=[room.pk for room in filtered_rooms]))
         elif max_avg_score_type_key in param2value:
             max_avg = float(param2value[max_avg_score_type_key])
             room_obj = room_obj.annotate(
@@ -157,48 +149,29 @@ class RoomFilters(APIView):
 
         return room_obj
 
-    def append_rooms_by_price(self, param2value, room_obj):
-        min_price_key = "min_price"
-        max_price_key = "max_price"
-
-        if min_price_key in param2value and max_price_key in param2value:
-            room_obj = room_obj.filter(
-                price__gte=param2value[min_price_key],
-                price__lte=param2value[max_price_key],
-            )
-
-        elif min_price_key in param2value:
-            room_obj = room_obj.filter(price__gte=param2value[min_price_key])
-
-        elif max_price_key in param2value:
-            room_obj = room_obj.filter(price__lte=param2value[max_price_key])
-
-        return room_obj
-
-    def append_rooms_by_duration_of_time(self, param2value, room_obj):
-        min_duration_of_time_key = "min_duration_of_time"
-        max_duration_of_time_key = "max_duration_of_time"
+    def append_rooms_by_time_duration(self, param2value, room_obj):
+        min_time_duration_key = "min_time_duration"
+        max_time_duration_key = "max_time_duration"
 
         if (
-            min_duration_of_time_key in param2value
-            and max_duration_of_time_key in param2value
+            min_time_duration_key in param2value
+            and max_time_duration_key in param2value
         ):
             room_obj = room_obj.filter(
-                duration_of_time__gte=param2value[min_duration_of_time_key],
-                duration_of_time__lte=param2value[max_duration_of_time_key],
+                time_duration__gte=param2value[min_time_duration_key],
+                time_duration__lte=param2value[max_time_duration_key],
             )
-        elif min_duration_of_time_key in param2value:
+        elif min_time_duration_key in param2value:
             room_obj = room_obj.filter(
-                duration_of_time__gte=param2value[min_duration_of_time_key]
+                time_duration__gte=param2value[min_time_duration_key]
             )
-        elif max_duration_of_time_key in param2value:
+        elif max_time_duration_key in param2value:
             room_obj = room_obj.filter(
-                duration_of_time__lte=param2value[max_duration_of_time_key]
+                time_duration__lte=param2value[max_time_duration_key]
             )
 
         return room_obj
 
-    # TODO@Ando: branch에 제대로 속성 정리가 안되어 있음. 그리고 branch_name도 추가해야 함.
     def get(self, request):
         param2value = dict()
         for key, val in request.query_params.items():
@@ -241,8 +214,7 @@ class RoomFilters(APIView):
             "creativity_score", param2value, room_obj
         )
 
-        room_obj = self.append_rooms_by_price(param2value, room_obj)
-        room_obj = self.append_rooms_by_duration_of_time(param2value, room_obj)
+        room_obj = self.append_rooms_by_time_duration(param2value, room_obj)
 
         if "brand_name" in param2value:
             room_obj = room_obj.filter(
