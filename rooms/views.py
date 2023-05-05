@@ -190,10 +190,10 @@ class RoomFilters(APIView):
             room_obj = room_obj.filter(difficulty__in=difficulty_list)
         if "fear_degree" in param2value:
             fear_degree_list = param2value["fear_degree"].split(",")
-            room_obj = room_obj.filter(branch__fear_degree__in=fear_degree_list)
+            room_obj = room_obj.filter(fear_degree__in=fear_degree_list)
         if "activity" in param2value:
             activity_list = param2value["activity"].split(",")
-            room_obj = room_obj.filter(branch__activity__in=activity_list)
+            room_obj = room_obj.filter(activity__in=activity_list)
 
         room_obj = self.append_rooms_by_avg_score(
             "rating", param2value, room_obj
