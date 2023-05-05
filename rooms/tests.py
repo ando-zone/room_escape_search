@@ -303,3 +303,151 @@ class RoomFiltersAPITest(APITestCase):
         self.assertEqual(response_1.status_code, status.HTTP_200_OK)
         self.assertEqual(response_1.data, serializer.data)
         self.assertEqual(response_2.data, serializer.data)
+
+    def test_get_params_with_fear_degree(self):
+        url = f"/api/v1/rooms/filters"
+
+        params = {"fear_degree": "1|2|3|4|5"}
+        with self.assertRaises(ValueError):
+            response = self.client.get(url, params)
+
+        params = {"fear_degree": "1,2,3,4,5"}
+        response_1 = self.client.get(url, params)
+        params = {"fear_degree": "1,3"}
+        response_2 = self.client.get(url, params)
+        rooms = list()
+        for room in Room.objects.all():
+            if room.difficulty in {0, 1, 2, 3, 4, 5}:
+                rooms.append(room)
+        room_obj = Room.objects.filter(pk__in=[room.pk for room in rooms])
+        serializer = RoomListSerializer(room_obj, many=True)
+        self.assertEqual(response_1.status_code, status.HTTP_200_OK)
+        self.assertEqual(response_1.data, serializer.data)
+        self.assertEqual(response_2.data, serializer.data)
+
+    def test_get_params_with_activity(self):
+        url = f"/api/v1/rooms/filters"
+
+        params = {"activity": "높음,보통,낮음"}
+        response_1 = self.client.get(url, params)
+        params = {"activity": "높음"}
+        response_2 = self.client.get(url, params)
+        params = {"activity": "높음|보통|낮음"}
+        response_3 = self.client.get(url, params)
+        rooms = list()
+        for room in Room.objects.all():
+            if room.activity in {"높음", "보통", "낮음"}:
+                rooms.append(room)
+        room_obj = Room.objects.filter(pk__in=[room.pk for room in rooms])
+        serializer = RoomListSerializer(room_obj, many=True)
+        self.assertEqual(response_1.status_code, status.HTTP_200_OK)
+        self.assertEqual(response_1.data, serializer.data)
+        self.assertNotEqual(response_2.data, serializer.data)
+        self.assertNotEqual(response_3.data, serializer.data)
+
+    def test_get_params_with_brand_name(self):
+        url = f"/api/v1/rooms/filters"
+
+        for param_val in {"b", "bra", "brand"}:
+            params = {"brand_name": param_val}
+            response = self.client.get(url, params)
+
+            rooms = list()
+            for room in Room.objects.all():
+                if param_val in room.branch.brand.name:
+                    rooms.append(room)
+            room_obj = Room.objects.filter(pk__in=[room.pk for room in rooms])
+            serializer = RoomListSerializer(room_obj, many=True)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(response.data, serializer.data)
+            self.assertEqual(len(response.data), 2)
+
+        for param_val in {"c", "co", "cook"}:
+            params = {"brand_name": param_val}
+            response = self.client.get(url, params)
+
+            rooms = list()
+            for room in Room.objects.all():
+                if param_val in room.branch.brand.name:
+                    rooms.append(room)
+            room_obj = Room.objects.filter(pk__in=[room.pk for room in rooms])
+            serializer = RoomListSerializer(room_obj, many=True)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(len(response.data), 0)
+
+    def test_get_params_with_branch_name(self):
+        url = f"/api/v1/rooms/filters"
+
+        for param_val in {"b", "bra", "branch"}:
+            params = {"branch_name": param_val}
+            response = self.client.get(url, params)
+
+            rooms = list()
+            for room in Room.objects.all():
+                if param_val in room.branch.name:
+                    rooms.append(room)
+            room_obj = Room.objects.filter(pk__in=[room.pk for room in rooms])
+            serializer = RoomListSerializer(room_obj, many=True)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(response.data, serializer.data)
+            self.assertEqual(len(response.data), 2)
+
+        for param_val in {"1", "2"}:
+            params = {"branch_name": param_val}
+            response = self.client.get(url, params)
+
+            rooms = list()
+            for room in Room.objects.all():
+                if param_val in room.branch.name:
+                    rooms.append(room)
+            room_obj = Room.objects.filter(pk__in=[room.pk for room in rooms])
+            serializer = RoomListSerializer(room_obj, many=True)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(len(response.data), 1)
+
+    def test_get_params_with_room_name(self):
+        url = f"/api/v1/rooms/filters"
+
+        for param_val in {"r", "ro", "room"}:
+            params = {"name": param_val}
+            response = self.client.get(url, params)
+
+            rooms = list()
+            for room in Room.objects.all():
+                if param_val in room.name:
+                    rooms.append(room)
+            room_obj = Room.objects.filter(pk__in=[room.pk for room in rooms])
+            serializer = RoomListSerializer(room_obj, many=True)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(response.data, serializer.data)
+            self.assertEqual(len(response.data), 2)
+
+        for param_val in {"1", "2"}:
+            params = {"name": param_val}
+            response = self.client.get(url, params)
+
+            rooms = list()
+            for room in Room.objects.all():
+                if param_val in room.name:
+                    rooms.append(room)
+            room_obj = Room.objects.filter(pk__in=[room.pk for room in rooms])
+            serializer = RoomListSerializer(room_obj, many=True)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(len(response.data), 1)
+
+    def test_get_params_with_genre(self):
+        url = f"/api/v1/rooms/filters"
+
+        for param_val in {"로맨스", "멜로", "SF", "판타지"}:
+            params = {"genre": param_val}
+            response = self.client.get(url, params)
+
+            rooms = list()
+            for room in Room.objects.all():
+                if param_val in room.genre:
+                    rooms.append(room)
+            room_obj = Room.objects.filter(pk__in=[room.pk for room in rooms])
+            serializer = RoomListSerializer(room_obj, many=True)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(response.data, serializer.data)
+            self.assertEqual(len(response.data), 1)
