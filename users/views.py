@@ -20,12 +20,12 @@ class Me(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        # TODO@Ando: request.user를 한 번 출력해보고 싶다.
         user = request.user
         serializer = serializers.PrivateUserSerializer(user)
         return Response(serializer.data, status=HTTP_200_OK)
 
     def put(self, request):
+        # TODO@Ando: put 메서드에 쓰이는 serializer는 email이나 username을 수정할 수 없게 해야할 것 같다.
         user = request.user
         serializer = serializers.PrivateUserSerializer(
             user,
@@ -131,9 +131,11 @@ class JWTLogIn(APIView):
                 settings.SECRET_KEY,
                 algorithm="HS256",
             )
-            return Response({"token": token})
+            return Response({"token": token}, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "wrong password"})
+            return Response(
+                {"error": "wrong password"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class GithubLogIn(APIView):
