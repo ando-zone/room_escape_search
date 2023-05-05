@@ -146,6 +146,118 @@ class UsersAPITestCase(APITestCase):
         )
         self.assertEqual(decoded_payload["pk"], self.user.pk)
 
+    # GithubLogIn class: "/api/v1/users/github"
+    @mock.patch("users.views.requests.post")
+    @mock.patch("users.views.requests.get")
+    @mock.patch("users.views.login")
+    def test_github_login_success_with_new_account_created(
+        self, mock_login, mock_requests_get, mock_requests_post
+    ):
+        mock_requests_post.return_value.json.return_value = {
+            "access_token": "mock_access_token"
+        }
+        mock_requests_get.return_value.json.side_effect = [
+            {
+                "login": "github_user",
+                "email": "github_user@email.com",
+                "name": "Github User",
+                "avatar_url": "https://example.com/avatar.png",
+            },
+            [{"email": "github_user@email.com"}],
+        ]
+
+        response = self.client.post(
+            "/api/v1/users/github", {"code": "mock_code"}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        created_user = User.objects.get(username="github_user")
+        mock_login.assert_called_once_with(mock.ANY, created_user)
+
+    @mock.patch("users.views.requests.post")
+    @mock.patch("users.views.requests.get")
+    @mock.patch("users.views.login")
+    def test_github_login_success_with_existed_account(
+        self, mock_login, mock_requests_get, mock_requests_post
+    ):
+        existed_user = User.objects.create_user(
+            username="github_user",
+            email="github_user@email.com",
+        )
+        mock_requests_post.return_value.json.return_value = {
+            "access_token": "mock_access_token"
+        }
+        mock_requests_get.return_value.json.side_effect = [
+            {
+                "login": "github_user",
+                "email": "github_user@email.com",
+                "name": "Github User",
+                "avatar_url": "https://example.com/avatar.png",
+            },
+            [{"email": "github_user@email.com"}],
+        ]
+
+        response = self.client.post(
+            "/api/v1/users/github", {"code": "mock_code"}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        mock_login.assert_called_once_with(mock.ANY, existed_user)
+
+    # KakaoLogIn class: "/api/v1/users/kakao"
+    @mock.patch("users.views.requests.post")
+    @mock.patch("users.views.requests.get")
+    @mock.patch("users.views.login")
+    def test_kakao_login_success_with_new_account_created(
+        self, mock_login, mock_requests_get, mock_requests_post
+    ):
+        mock_requests_post.return_value.json.return_value = {
+            "access_token": "mock_access_token"
+        }
+        mock_requests_get.return_value.json.return_value = {
+            "kakao_account": {
+                "profile": {
+                    "nickname": "kakao_user",
+                    "profile_image_url": "https://example.com/avatar.png",
+                },
+                "email": "kakao_user@email.com",
+            }
+        }
+
+        response = self.client.post(
+            "/api/v1/users/kakao", {"code": "mock_code"}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        created_user = User.objects.get(username="kakao_user")
+        mock_login.assert_called_once_with(mock.ANY, created_user)
+
+    @mock.patch("users.views.requests.post")
+    @mock.patch("users.views.requests.get")
+    @mock.patch("users.views.login")
+    def test_kakao_login_success_with_existed_account(
+        self, mock_login, mock_requests_get, mock_requests_post
+    ):
+        existed_user = User.objects.create_user(
+            username="kakao_user",
+            email="kakao_user@email.com",
+        )
+        mock_requests_post.return_value.json.return_value = {
+            "access_token": "mock_access_token"
+        }
+        mock_requests_get.return_value.json.return_value = {
+            "kakao_account": {
+                "profile": {
+                    "nickname": "kakao_user",
+                    "profile_image_url": "https://example.com/avatar.png",
+                },
+                "email": "kakao_user@email.com",
+            }
+        }
+
+        response = self.client.post(
+            "/api/v1/users/kakao", {"code": "mock_code"}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        mock_login.assert_called_once_with(mock.ANY, existed_user)
+
 
 # ChangePassword Class: "/api/v1/users/change-password"
 class ChangePasswordAPITestCase(APITestCase):
@@ -153,7 +265,7 @@ class ChangePasswordAPITestCase(APITestCase):
         self.user = User.objects.create_user(
             username="testuser",
             password="testpassword",
-            email="testuser@example.com",
+            email="testuser@email.com",
         )
         self.url = "/api/v1/users/change-password"
         self.client.login(username="testuser", password="testpassword")
