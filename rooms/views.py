@@ -80,7 +80,10 @@ class RoomDetail(APIView):
         room = self.get_object(pk)
         room.delete()
 
-        return Response({"ok": "방이 성공적으로 삭제되었습니다."}, status=HTTP_204_NO_CONTENT)
+        return Response(
+            {"ok": "Room has been successfully deleted!"},
+            status=HTTP_204_NO_CONTENT,
+        )
 
 
 class RoomReviews(APIView):
