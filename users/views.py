@@ -134,7 +134,7 @@ class JWTLogIn(APIView):
             return Response({"token": token}, status=status.HTTP_200_OK)
         else:
             return Response(
-                {"error": "wrong password"}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "패스워드가 틀렸습니다."}, status=status.HTTP_400_BAD_REQUEST
             )
 
 
