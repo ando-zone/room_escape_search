@@ -1,7 +1,22 @@
 from django.db import models
 from common.models import CommonModel
 
-# from reviews.models import Review
+
+def get_average_score_for_room(room: object, score_type: str) -> float:
+    total_rating = 0
+    count = 0
+    # for review in room.reviews.all()로 적는 것보다 아래가 더 효율적임. (더 최적화 되어 있음.)
+    for review in room.reviews.all().values(score_type):  # 반환값이 딕셔너리임.
+        if review[score_type] is None:
+            continue
+
+        total_rating += review[score_type]
+        count += 1
+
+    if count == 0:
+        return float(0)
+
+    return round(total_rating / count, 2)
 
 
 # Create your models here.
@@ -48,68 +63,19 @@ class Room(CommonModel):
         return self.reviews.count()
 
     def average_rating(room):
-        count = room.reviews.count()
-        if count == 0:
-            return 0
-
-        total_rating = 0
-        # for review in room.reviews.all()로 적는 것보다 아래가 더 효율적임. (더 최적화 되어 있음.)
-        for review in room.reviews.all().values("rating"):  # 반환값이 딕셔너리임.
-            total_rating += review["rating"]
-
-        return round(total_rating / count, 2)
+        return get_average_score_for_room(room, "rating")
 
     def average_interior_score(room):
-        count = room.reviews.count()
-        if count == 0:
-            return 0
-
-        total_rating = 0
-        for review in room.reviews.all().values("interior_score"):
-            total_rating += review["interior_score"]
-
-        return round(total_rating / count, 2)
+        return get_average_score_for_room(room, "interior_score")
 
     def average_story_score(room):
-        count = room.reviews.count()
-        if count == 0:
-            return 0
-
-        total_rating = 0
-        for review in room.reviews.all().values("story_score"):
-            total_rating += review["story_score"]
-
-        return round(total_rating / count, 2)
+        return get_average_score_for_room(room, "story_score")
 
     def average_creativity_score(room):
-        count = room.reviews.count()
-        if count == 0:
-            return 0
-
-        total_rating = 0
-        for review in room.reviews.all().values("creativity_score"):
-            total_rating += review["creativity_score"]
-
-        return round(total_rating / count, 2)
+        return get_average_score_for_room(room, "creativity_score")
 
     def average_problem_score(room):
-        count = room.reviews.count()
-        if count == 0:
-            return 0
-
-        total_rating = 0
-        for review in room.reviews.all().values("problem_score"):
-            total_rating += review["problem_score"]
-
-        return round(total_rating / count, 2)
+        return get_average_score_for_room(room, "problem_score")
 
     def average_equipment_score(room):
-        count = room.reviews.count()
-        if count == 0:
-            return 0
-
-        total_rating = 0
-        for review in room.reviews.all().values("equipment_score"):
-            total_rating += review["equipment_score"]
-
-        return round(total_rating / count, 2)
+        return get_average_score_for_room(room, "equipment_score")
