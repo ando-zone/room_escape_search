@@ -14,6 +14,7 @@ class BranchSerializer(serializers.ModelSerializer):
             "pk",
             "name",
             "address",
+            "booking_link",
             "brand",
             "average_rating"
         )
